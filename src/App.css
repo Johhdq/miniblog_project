@@ -1,0 +1,7 @@
+/*Container para o corpo todo da aplicação*/
+.container {
+  /*Altura mínima de mais ou menos 60% da tela do usuário*/
+  min-height: 60vh;
+  /*Para separar os elementos inferiores a esse container*/
+  margin-bottom: 5em;
+}
