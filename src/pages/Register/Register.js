@@ -45,7 +45,9 @@ export const Register = () => {
             required
           />
         </label>
-        <input className="btn" type="submit" value="Confirmar" />
+        <div>
+            <input className="btn" type="submit" value="Confirmar" />
+        </div>
       </form>
     </div>
   );
