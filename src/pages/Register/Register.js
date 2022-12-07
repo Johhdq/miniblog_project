@@ -1,6 +1,8 @@
 import styles from "./Register.module.css";
 
+// hooks
 import { useState, useEffect } from "react";
+import { useAuthentication } from "../../hooks/useAuthentication";
 
 export const Register = () => {
   const [displayName, setDisplayName] = useState("");
@@ -9,7 +11,15 @@ export const Register = () => {
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  // como eu já tenho um estado error eu vou chamar esse de authError
+  const {
+    createUser,
+    error: authError,
+    sucess: authSucess,
+    loading,
+  } = useAuthentication();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError("");
@@ -24,8 +34,15 @@ export const Register = () => {
       setError("As senhas precisam ser iguais!");
       return;
     }
-    console.log(user);
+
+    const res = await createUser(user);
+
+    console.log(res);
   };
+
+  useEffect(() => {
+    setError(authError);
+  }, [authError]);
 
   return (
     <div className={styles.register}>
@@ -78,10 +95,19 @@ export const Register = () => {
           />
         </label>
         <div>
-          <input className="btn" type="submit" value="Confirmar" />
+          {!loading ? (
+            <button className="btn" type="submit">
+              Confirmar
+            </button>
+          ) : (
+            <button type="submit" disabled>
+              Aguarde...
+            </button>
+          )}
         </div>
         {error && <p className="animation error">{error}</p>}
-      </form>   
+        {authSucess && <p className="animation sucess">{authSucess}</p>}
+      </form>
     </div>
   );
 };

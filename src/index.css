@@ -100,12 +100,30 @@ input, textarea {
 
 button[disabled] {
   background-color: #aaa;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  width: 120px;
+  font-weight: bold;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1em;
+  transition: .4s;
+  margin-top: 6px;
 }
 
 .container .error {
   color: #721c24;
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.container .sucess {
+  color: #fff;
+  background-color: #38c033;
+  border: 1px solid #27b422;
   padding: 5px;
   border-radius: 5px;
 }
