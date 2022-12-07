@@ -34,7 +34,6 @@ nav button:hover {
 
 /* form styles - estilo global para os forms da aplicação */
 form {
-  border: solid salmon 2px;
   max-width: 40%;
   margin: 0 auto;
   display: flex;
@@ -74,6 +73,7 @@ input, textarea {
   padding: 10px 15px;
   font-size: 1em;
   transition: .4s;
+  margin-top: 6px;
 }
 
 .btn.btn-dark {
@@ -108,4 +108,18 @@ button[disabled] {
   border: 1px solid #f5c6cb;
   padding: 5px;
   border-radius: 5px;
+}
+
+.animation {
+  animation: teste 0.5s ease-in-out;
+}
+
+@keyframes teste {
+  0% {
+	  opacity: 0;
+	  transform: translateY(-40px);
+	}
+	60% {
+	  transform: translateY(0);
+	}
 }
