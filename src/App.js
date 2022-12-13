@@ -20,6 +20,8 @@ import { Footer } from "./components/Footer";
 
 // context
 import { AuthProvider } from "./context/AuthContext";
+import { CreatePost } from "./pages/CreatePost/CreatePost";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 function App() {
   // começa como undefined porque ainda não vai ter usuário na sessão atual
@@ -49,6 +51,9 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              {/*estamos tralhando com uma hierarquia de rotas no caso*/}
+              <Route path="/posts/create" element={<CreatePost />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
           </div>
           <Footer />
