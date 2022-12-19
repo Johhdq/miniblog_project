@@ -79,6 +79,8 @@ export const useAuthentication = () => {
     signOut(auth);
   };
 
+  // login - sing in
+
   // para executar toda vez que sairmos da página
   useEffect(() => {
     return () => setCancelled(true);
