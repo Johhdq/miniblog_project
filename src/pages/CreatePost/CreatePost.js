@@ -1,5 +1,7 @@
 import styles from "./CreatePost.module.css";
 
+// hooks
+
 export const CreatePost = () => {
   return (
     <div>

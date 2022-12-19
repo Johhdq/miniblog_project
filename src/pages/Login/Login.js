@@ -13,6 +13,7 @@ export const Login = () => {
     error: authError,
     sucess: authSucess,
     loading,
+    login,
   } = useAuthentication();
 
   const handleSubmit = async (e) => {
@@ -25,6 +26,8 @@ export const Login = () => {
       password: displayPassword,
     };
 
+    const res = login(user);
+    console.log(res);
   };
 
   useEffect(() => {
