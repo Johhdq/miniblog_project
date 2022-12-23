@@ -4,6 +4,7 @@ import styles from "./CreatePost.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
+import { useInsertDocument } from "../../hooks/useInsertDocument";
 
 export const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -12,8 +13,32 @@ export const CreatePost = () => {
   const [tags, setTags] = useState([]);
   const [formError, setFormError] = useState("");
 
+  const { user } = useAuthValue();
+
+  const { insertDocument, response, sucess: authSucess } = useInsertDocument("posts");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFormError("");
+
+    // validar image URL
+
+    // criar array de tags
+
+    // checar todos os valores
+
+    console.log("entrou!");
+
+    insertDocument({
+      title,
+      image,
+      body,
+      tags,
+      uid: user.uid,
+      createdBy: user.displayName,
+    });
+
+    // redirect to home page
   };
 
   return (
@@ -69,12 +94,7 @@ export const CreatePost = () => {
           />
         </label>
         <div>
-          <button className="btn" type="submit">
-            Publicar
-          </button>
-        </div>
-        {/* <div>
-          {!loading ? (
+          {!response.loading ? (
             <button className="btn" type="submit">
               Confirmar
             </button>
@@ -84,8 +104,9 @@ export const CreatePost = () => {
             </button>
           )}
         </div>
-        {error && <p className="animation error">{error}</p>}
-        {authSucess && <p className="animation sucess">{authSucess}</p>} */}
+        {console.log(response)}
+        {response.error && <p className="animation error">{response.error}</p>}
+        {authSucess && <p className="animation sucess">{authSucess}</p>}
       </form>
     </div>
   );
