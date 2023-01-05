@@ -15,17 +15,37 @@ export const CreatePost = () => {
 
   const { user } = useAuthValue();
 
-  const { insertDocument, response, sucess: authSucess } = useInsertDocument("posts");
+  const {
+    insertDocument,
+    response,
+    sucess: authSucess,
+  } = useInsertDocument("posts");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormError("");
 
     // validar image URL
+    if (image !== "") {
+      try {
+        new URL(image);
+      } catch (error) {
+        setFormError("A imagem precisa ser uma URL válida!");
+        return;
+      }
+    }
 
     // criar array de tags
+    // padronizar todas as tags minúsculo
+    const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
 
     // checar todos os valores
+    if (!tags || !title || !body) {
+      setFormError("Por favor, preencha os campos necessários!");
+      return;
+    }
 
     console.log("entrou!");
 
@@ -33,12 +53,13 @@ export const CreatePost = () => {
       title,
       image,
       body,
-      tags,
+      tagsArray,
       uid: user.uid,
       createdBy: user.displayName,
     });
 
     // redirect to home page
+    navigate("/");
   };
 
   return (
@@ -104,8 +125,8 @@ export const CreatePost = () => {
             </button>
           )}
         </div>
-        {console.log(response)}
         {response.error && <p className="animation error">{response.error}</p>}
+        {formError && <p className="animation error">{formError}</p>}
         {authSucess && <p className="animation sucess">{authSucess}</p>}
       </form>
     </div>
