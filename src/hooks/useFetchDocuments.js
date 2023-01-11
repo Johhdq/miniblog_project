@@ -10,7 +10,7 @@ import {
   collection,
 } from "firebase/firestore";
 
-export const useFetchDocument = (docCollection, search = null, uid = null) => {
+export const useFetchDocuments = (docCollection, search = null, uid = null) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -28,7 +28,7 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
       try {
         let q;
         // vai pegar todos os dados com a data de criação de forma decrescente
-        q = await query(collectionRef, orderBy("createdAt", "desc"));
+        q = await query(collectionRef, orderBy("createAt", "desc"));
 
         // vai pegar os nossos dados e ver se tem diferença com a coleção, se tiver traz eles pra gente
         await onSnapshot(q, (querySnapshot) => {
@@ -39,6 +39,7 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
             }))
           );
         });
+        console.log(documents);
 
         setLoading(false);
       } catch (error) {
