@@ -22,6 +22,7 @@ import { Footer } from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
 import { CreatePost } from "./pages/CreatePost/CreatePost";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
+import { Search } from "./pages/Search/Search";
 
 function App() {
   // começa como undefined porque ainda não vai ter usuário na sessão atual
@@ -49,6 +50,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              {/*O parâmetro que fica na query não necessariamente precisa ficar na url que está sendo utilizada*/}
+              <Route path="/search" element={<Search />} />
               <Route
                 path="/login"
                 element={!user ? <Login /> : <Navigate to="/" />}

@@ -10,12 +10,17 @@ import { useFetchDocuments } from "../../hooks/useFetchDocuments";
 import { PostDetails } from "../../components/PostDetails";
 
 export const Home = () => {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   // posts é a coleção de documents que está sendo trabalhada
   const { documents: posts, loading } = useFetchDocuments("posts");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (query) {
+      return navigate(`/search?q=${query}`);
+    }
   };
 
   return (

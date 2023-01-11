@@ -10,6 +10,7 @@ import {
   collection,
 } from "firebase/firestore";
 
+// com o search vai ser feita uma busca baseada nas tags do post
 export const useFetchDocuments = (docCollection, search = null, uid = null) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
@@ -27,8 +28,22 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
       try {
         let q;
-        // vai pegar todos os dados com a data de criação de forma decrescente
-        q = await query(collectionRef, orderBy("createAt", "desc"));
+
+        // busca
+        // dashboard
+
+        if (search) {
+          // como as tags são um array temos como acessar o parêmetro array-contains do próprio firebase para ver se o array contém determinado item
+          // nesse caso está sendo verificado se a tag está dentro do array
+          q = await query(
+            collectionRef,
+            where("tags", "array-contains", search),
+            orderBy("createAt", "desc")
+          );
+        } else {
+          // vai pegar todos os dados com a data de criação de forma decrescente
+          q = await query(collectionRef, orderBy("createAt", "desc"));
+        }
 
         // vai pegar os nossos dados e ver se tem diferença com a coleção, se tiver traz eles pra gente
         await onSnapshot(q, (querySnapshot) => {
