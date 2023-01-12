@@ -67,7 +67,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
     // só vai ser executada quando algum dos elementos do array de dependências mudar
     loadData();
-  }, [docCollection, search, uid, cancelled]);
+  }, [docCollection, search, uid, cancelled, documents]);
 
   useEffect(() => {
     return () => setCancelled(true);

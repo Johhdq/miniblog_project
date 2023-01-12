@@ -23,7 +23,6 @@ export const PostDetails = ({ post }) => {
       <Link to={`/posts/${post.id}`} className="btn btn-outline">
         Ler
       </Link>
-      <hr />
     </div>
   );
 };

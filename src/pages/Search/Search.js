@@ -20,17 +20,29 @@ export const Search = () => {
     <div className={styles.search_result}>
       <h2>Resultado da Pesquisa</h2>
       <div>
-        {console.log(posts)}
         {posts && posts.length === 0 && (
-          <>
-            <p>Não foram encontrados posts através da sua busca...</p>
+          <div className={styles.noposts}>
+            <p className={styles.noposts_text}>
+              Não foram encontrados posts através da sua busca...
+            </p>
             <Link to="/" className="btn btn-dark">
               Voltar
             </Link>
-          </>
+          </div>
         )}
-        {posts &&
-          posts.map((post) => <PostDetails key={post.id} post={post} />)}
+        <div>
+          {posts && posts.length === 1 && (
+            <PostDetails key={posts[0].id} post={posts[0]} />
+          )}
+          {posts &&
+            posts.length > 1 &&
+            posts.map((post) => (
+              <>
+                <PostDetails key={post.id} post={post} />
+                <hr />
+              </>
+            ))}
+        </div>
       </div>
     </div>
   );

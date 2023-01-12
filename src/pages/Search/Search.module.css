@@ -1,20 +1,19 @@
 .search_result {
     margin-top: 1em;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
+    align-items: center;
 }
 
 .search_result h2 {
     margin-bottom: 1em;
 }
 
-.search_result p {
+.search_result .noposts_text {
     margin-bottom: 25px;
 }
 
-.search_result div {
+.search_result .noposts {
     align-items: center;
     display: flex;
     flex-direction: column;
