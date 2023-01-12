@@ -23,6 +23,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { CreatePost } from "./pages/CreatePost/CreatePost";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { Search } from "./pages/Search/Search";
+import { Post } from "./pages/Post/Post";
 
 function App() {
   // começa como undefined porque ainda não vai ter usuário na sessão atual
@@ -52,6 +53,7 @@ function App() {
               <Route path="/about" element={<About />} />
               {/*O parâmetro que fica na query não necessariamente precisa ficar na url que está sendo utilizada*/}
               <Route path="/search" element={<Search />} />
+              <Route path="/posts/:id" element={<Post />} />
               <Route
                 path="/login"
                 element={!user ? <Login /> : <Navigate to="/" />}
