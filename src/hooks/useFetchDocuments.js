@@ -40,6 +40,14 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
             where("tagsArray", "array-contains", search),
             orderBy("createAt", "desc")
           );
+        } else if (uid) {
+          // pegar onde o uid for igual ao uid passado por parâmetro
+          // vai pegar os posts por uid do usuário
+          q = await query(
+            collectionRef,
+            where("uid", "==", uid),
+            orderBy("createAt", "desc")
+          );
         } else {
           // vai pegar todos os dados com a data de criação de forma decrescente
           q = await query(collectionRef, orderBy("createAt", "desc"));
@@ -67,7 +75,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
     // só vai ser executada quando algum dos elementos do array de dependências mudar
     loadData();
-  }, [docCollection, search, uid, cancelled, documents]);
+  }, [docCollection, search, uid, cancelled]);
 
   useEffect(() => {
     return () => setCancelled(true);
