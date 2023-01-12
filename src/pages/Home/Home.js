@@ -37,7 +37,6 @@ export const Home = () => {
         </div>
       </form>
       <div>
-        {console.log(posts)}
         {loading && <p>Carregando...</p>}
         {posts &&
           posts.map((post) => <PostDetails key={post.id} post={post} />)}

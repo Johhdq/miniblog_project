@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 export const PostDetails = ({ post }) => {
   return (
     <div className={styles.post_details}>
-      <img src={post.image} alt={post.title} />
+      {post.image ? (
+        <img src={post.image} alt={post.title} />
+      ) : (
+        <p className={styles.no_image}>Sem imagem!</p>
+      )}
       <h2>{post.title}</h2>
       <p className={styles.createdby}>{post.createdBy}</p>
       <div className={styles.tags}>
@@ -19,6 +23,7 @@ export const PostDetails = ({ post }) => {
       <Link to={`/posts/${post.id}`} className="btn btn-outline">
         Ler
       </Link>
+      <hr />
     </div>
   );
 };

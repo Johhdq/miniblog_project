@@ -1,3 +1,5 @@
+import styles from "./Search.module.css";
+
 // hooks
 import { Link } from "react-router-dom";
 import { useFetchDocuments } from "../../hooks/useFetchDocuments";
@@ -15,9 +17,10 @@ export const Search = () => {
   const { documents: posts } = useFetchDocuments("posts", search);
 
   return (
-    <div>
-      <h2>Search</h2>
+    <div className={styles.search_result}>
+      <h2>Resultado da Pesquisa</h2>
       <div>
+        {console.log(posts)}
         {posts && posts.length === 0 && (
           <>
             <p>Não foram encontrados posts através da sua busca...</p>

@@ -37,7 +37,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
           // nesse caso está sendo verificado se a tag está dentro do array
           q = await query(
             collectionRef,
-            where("tags", "array-contains", search),
+            where("tagsArray", "array-contains", search),
             orderBy("createAt", "desc")
           );
         } else {
