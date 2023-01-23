@@ -20,9 +20,7 @@ export const Post = () => {
             <p>Sem imagem!</p>
           )}
           <h3>Conteúdo</h3>
-          <textarea cols="10" rows="10">
-            {post.body}
-          </textarea>
+          <textarea cols="10" rows="10" defaultValue={post.body}></textarea>
           <h3>Este post trata sobre:</h3>
           <div className={styles.tags}>
             {post.tagsArray.map((tag) => (
@@ -37,4 +35,3 @@ export const Post = () => {
     </div>
   );
 };
-

@@ -16,6 +16,10 @@ export const Dashboard = () => {
 
   const deleteDocument = (id) => {};
 
+  if (loading) {
+    return <p>Carregando...</p>
+  }
+
   return (
     <div>
       <h2>Dashboard</h2>
@@ -41,9 +45,14 @@ export const Dashboard = () => {
                   <Link to={`/posts/${posts.id}`} className="btn btn-outline">
                     Ver post
                   </Link>
-                  <Link className="btn btn-outline">Editar</Link>
+                  <Link
+                    to={`posts/edit/${post.id}`}
+                    className="btn btn-outline"
+                  >
+                    Editar
+                  </Link>
                   <button
-                    onClick={() => deleteDocument()}
+                    onClick={() => deleteDocument(post.id)}
                     className="btn btn-outline btn-danger"
                   >
                     Excluir
