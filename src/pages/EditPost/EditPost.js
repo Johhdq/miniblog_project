@@ -1,14 +1,13 @@
-import styles from "./CreatePost.module.css";
+import styles from "./EditPost.module.css";
 
 // hooks
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
 import { useInsertDocument } from "../../hooks/useInsertDocument";
-import { useFetchDocument } from "../../hooks/useFetchDocument";
-import { useEffect } from "react";
+import {useFetchDocument} from "../../hooks/useFetchDocument";
 
-export const CreatePost = ({ isEdition }) => {
+export const EditPost = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [body, setBody] = useState("");
@@ -24,22 +23,6 @@ export const CreatePost = ({ isEdition }) => {
   } = useInsertDocument("posts");
 
   const navigate = useNavigate();
-
-  const { id } = useParams();
-  const { document: post, loading } = useFetchDocument("posts", id, isEdition);
-
-  useEffect(() => {
-    if (isEdition && post) {
-      setBody(post.body);
-      setImage(post.image);
-      setTitle(post.title);
-      setTags(post.tags);
-
-      let tags = "";
-      post.tagsArray.map((tag) => (tags += ` #${tag}`));
-      setTags(tags);
-    }
-  }, [post, isEdition]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,7 +64,7 @@ export const CreatePost = ({ isEdition }) => {
   };
 
   return (
-    <div className={styles.create_post}>
+    <div className={styles.edit_post}>
       <h2>Criar post</h2>
       <p>
         Escreva sobre o que quiser compartilhar e <strong>compartilhe</strong> o
@@ -95,7 +78,7 @@ export const CreatePost = ({ isEdition }) => {
             name="title"
             placeholder="Digite..."
             onChange={(e) => setTitle(e.target.value)}
-            value={title || ""}
+            value={title}
             required
           />
         </label>
@@ -106,7 +89,7 @@ export const CreatePost = ({ isEdition }) => {
             name="image"
             placeholder="URL da imagem a ser adicionada"
             onChange={(e) => setImage(e.target.value)}
-            value={image || ""}
+            value={image}
           />
         </label>
         <label>
@@ -117,7 +100,7 @@ export const CreatePost = ({ isEdition }) => {
             cols="30"
             rows="10"
             onChange={(e) => setBody(e.target.value)}
-            value={body || ""}
+            value={body}
             required
           ></textarea>
         </label>
@@ -128,7 +111,7 @@ export const CreatePost = ({ isEdition }) => {
             name="tags"
             placeholder="Insira uma tag que representa o seu post"
             onChange={(e) => setTags(e.target.value)}
-            value={tags || ""}
+            value={tags}
             required
           />
         </label>

@@ -39,11 +39,11 @@ export const Home = () => {
       <div>
         {loading && <p>Carregando...</p>}
         {posts &&
-          posts.map((post) => (
-            <>
-              <PostDetails key={post.id} post={post} />
+          posts.map((post, i) => (
+            <div key={post.id}>
+              <PostDetails post={post} />
               <hr />
-            </>
+            </div>
           ))}
         {posts && posts.length === 0 && (
           <div className={styles.noposts}>

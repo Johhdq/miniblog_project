@@ -13,6 +13,7 @@ import { Home } from "./pages/Home/Home";
 import { About } from "./pages/About/About";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
+import { EditPost } from "./pages/EditPost/EditPost";
 
 // components
 import { Navbar } from "./components/Navbar";
@@ -54,6 +55,7 @@ function App() {
               {/*O parâmetro que fica na query não necessariamente precisa ficar na url que está sendo utilizada*/}
               <Route path="/search" element={<Search />} />
               <Route path="/posts/:id" element={<Post />} />
+              <Route path="/dashboard/posts/edit/:id" element={<CreatePost isEdition={true} />} />
               <Route
                 path="/login"
                 element={!user ? <Login /> : <Navigate to="/" />}
