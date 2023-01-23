@@ -1,0 +1,54 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    /*alinha na vertical*/
+    align-items: center;
+    /*alinha na horizontal*/
+    justify-content: center;
+}
+
+.dashboard h2 {
+    font-size: 2.2em;
+    margin-bottom: .5em;
+}
+
+.dashboard .pStyle {
+    color: #AAA;
+    margin-bottom: 1em;
+}
+
+.post_header, .post_row {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    padding: 10px;
+}
+
+.post_header {
+    font-weight: bold;
+    border-bottom: 2px solid #CCC;
+}
+
+.post_row {
+    align-items: center;
+    border-bottom: 1px solid #EEE;
+    padding: 10px;
+}
+
+.post_row div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.post_row button,
+.post_row a {
+    margin: 0 5px;
+    font-size: 0.7em;
+}
+
+.post_row button {
+    height: 29.2px;
+}
+

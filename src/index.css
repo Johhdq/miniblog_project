@@ -16,7 +16,8 @@ textarea:focus {
   outline: none;
 }
 
-a, nav button {
+a,
+nav button {
   text-decoration: none;
   background-color: transparent;
   border: none;
@@ -53,7 +54,8 @@ label span {
   text-align: left;
 }
 
-input, textarea {
+input,
+textarea {
   box-sizing: border-box;
   border: none;
   border-bottom: 1px solid #ccc;
@@ -67,7 +69,7 @@ input, textarea {
   text-align: center;
   cursor: pointer;
   border-radius: 10px;
-  width: 120px;
+  /* width: 120px; */
   font-weight: bold;
   border: none;
   padding: 10px 15px;
@@ -81,7 +83,8 @@ input, textarea {
   border-radius: 0;
 }
 
-.btn.btn-outline {
+.btn.btn-outline,
+.btn.btn-outline-danger {
   background-color: transparent;
   border-radius: 0;
   color: #000;
@@ -92,16 +95,18 @@ input, textarea {
 .btn.btn-dark:hover {
   background-color: #ccc;
   color: #000
-
 }
 
 .btn:hover {
   background-color: #0f730c;
   color: #FFF
-
 }
 
 .btn.btn-outline:hover {
+  background-color: #000;
+}
+
+.btn.btn-outline-danger:hover {
   background-color: #dc3545;
 }
 
@@ -139,12 +144,25 @@ button[disabled] {
   animation: teste 0.5s ease-in-out;
 }
 
+.noposts {
+  text-align: center;
+}
+
+.noposts p {
+  margin-bottom: 1.5em;
+}
+
+.noposts a {
+  padding: 10px 25px;
+}
+
 @keyframes teste {
   0% {
-	  opacity: 0;
-	  transform: translateY(-40px);
-	}
-	60% {
-	  transform: translateY(0);
-	}
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+
+  60% {
+    transform: translateY(0);
+  }
 }

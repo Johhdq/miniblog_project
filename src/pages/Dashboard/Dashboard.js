@@ -21,11 +21,11 @@ export const Dashboard = () => {
   }
 
   return (
-    <div>
+    <div className={styles.dashboard}>
       <h2>Dashboard</h2>
-      <p>Gerencie seus posts</p>
+      <p className={styles.pStyle}>Gerencie seus posts</p>
       {posts && posts.length === 0 ? (
-        <div className={styles.noposts}>
+        <div className="noposts">
           <p>Não foram encontrados posts!</p>
           <Link to="/posts/create" className="btn">
             Criar seu primeiro post
@@ -33,13 +33,13 @@ export const Dashboard = () => {
         </div>
       ) : (
         <>
-          <div>
+          <div className={styles.post_header}>
             <span>Título</span>
             <span>Ações</span>
           </div>
           {posts &&
-            posts.map((post, i) => (
-              <div key={i}>
+            posts.map((post) => (
+              <div key={post.id} className={styles.post_row}>
                 <p>{post.title}</p>
                 <div>
                   <Link to={`/posts/${posts.id}`} className="btn btn-outline">
@@ -53,7 +53,7 @@ export const Dashboard = () => {
                   </Link>
                   <button
                     onClick={() => deleteDocument(post.id)}
-                    className="btn btn-outline btn-danger"
+                    className="btn btn-outline-danger"
                   >
                     Excluir
                   </button>
