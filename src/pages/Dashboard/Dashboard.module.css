@@ -49,6 +49,6 @@
 }
 
 .post_row button {
-    height: 29.2px;
+    height: inherit;
 }
 
