@@ -2,6 +2,7 @@
 import { useState, useEffect, useReducer } from "react";
 
 import { db } from "../firebase/config";
+import { updateDoc, doc } from "firebase/firestore";
 
 // Timestamp para saber a hora de criação de um dado
 import { collection, addDoc, Timestamp } from "firebase/firestore";
@@ -12,11 +13,11 @@ const initialState = {
 };
 
 // caso de loading, documento inserido e o caso de erro
-const insertReducer = (state, action) => {
+const updateReducer = (state, action) => {
   switch (action.type) {
     case "LOADING":
       return { loading: true, error: null };
-    case "INSERTED_DOC":
+    case "UPDATED_DOC":
       return { loading: false, error: null };
     case "ERROR":
       return { loading: false, error: action.payload };
@@ -25,8 +26,8 @@ const insertReducer = (state, action) => {
   }
 };
 
-export const useInsertDocument = (docCollection) => {
-  const [response, dispatch] = useReducer(insertReducer, initialState);
+export const useUpdateDocument = (docCollection) => {
+  const [response, dispatch] = useReducer(updateReducer, initialState);
 
   // deal with memory leak
   const [cancelled, setCancelled] = useState(false);
@@ -42,30 +43,21 @@ export const useInsertDocument = (docCollection) => {
     console.log("aqui");
   };
 
-  const insertDocument = async (document) => {
+  const updateDocument = async (uid, data) => {
+    checkIfIsCancelledBeforeDispatch({
+      type: "LOADING",
+    });
+
     try {
+      // pegando a referência do documento
+      const docRef = await doc(db, docCollection, uid);
+      const updatedDocument = await updateDoc(docRef, data);
+
       checkIfIsCancelledBeforeDispatch({
-        type: "LOADING",
+        type: "UPDATED_DOC",
+        payload: updatedDocument,
       });
-
-      // pega os dados que estamos passando para essa função, no caso o document e adiciona mais a propriedade createAt com a data de criação desse documento
-      const newDocument = { ...document, createAt: Timestamp.now() };
-
-      // o collection() vai procurar no banco a coleção que foi passada como argumento da função
-      const insertedDocument = await addDoc(
-        collection(db, docCollection),
-        newDocument
-      );
-      
-      checkIfIsCancelledBeforeDispatch({
-        type: "INSERTED_DOC",
-        payload: insertedDocument,
-      });
-      setSucess("Cadastro efetuado com sucesso!");
-
-      setTimeout(() => {
-        setSucess(null);
-      }, "2000");
+      setSucess("Edição efetuada com sucesso!");
     } catch (error) {
       checkIfIsCancelledBeforeDispatch({
         type: "ERROR",
@@ -79,5 +71,5 @@ export const useInsertDocument = (docCollection) => {
   // }, []);
 
   // vai ser retornado a função para poder ser executada e também a responsa do reducer
-  return { insertDocument, response, sucess };
+  return { updateDocument, response, sucess };
 };

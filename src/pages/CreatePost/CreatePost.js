@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
 import { useInsertDocument } from "../../hooks/useInsertDocument";
+import { useUpdateDocument } from "../../hooks/useUptadeDocument";
 import { useFetchDocument } from "../../hooks/useFetchDocument";
 import { useEffect } from "react";
 
@@ -19,9 +20,15 @@ export const CreatePost = ({ isEdition }) => {
 
   const {
     insertDocument,
-    response,
-    sucess: authSucess,
+    response: insertResponse,
+    sucess: authSucessInsert,
   } = useInsertDocument("posts");
+
+  const {
+    updateDocument,
+    response: updateResponse,
+    sucess: authSucessUpadte,
+  } = useUpdateDocument("posts");
 
   const navigate = useNavigate();
 
@@ -37,10 +44,7 @@ export const CreatePost = ({ isEdition }) => {
     };
 
     if (isEdition && post) {
-      let tags = "";
-      post.tagsArray.map((tag) => (tags += ` #${tag}`));
-
-      setValues(post.body, post.image, post.title, tags);
+      setValues(post.body, post.image, post.title, post.tagsArray.join(", "));
     } else {
       setValues();
     }
@@ -84,18 +88,22 @@ export const CreatePost = ({ isEdition }) => {
       setFormError("Por favor, preencha os campos necessários!");
       return;
     }
-
-    insertDocument({
+    
+    // objeto com os dados do post
+    const data = {
       title,
       image,
       body,
       tagsArray,
       uid: user.uid,
       createdBy: user.displayName,
-    });
+    };
 
-    // redirect to home page
-    navigate("/");
+    isEdition ? updateDocument(id, data) : insertDocument(data);
+    setTimeout(() => {
+      // redirect to home or dashboard page
+      isEdition ? navigate("/dashboard") : navigate("/");
+    }, "2000");
   };
 
   return (
@@ -109,7 +117,6 @@ export const CreatePost = ({ isEdition }) => {
           o seu conhecimento
         </p>
       )}
-      <p></p>
       <form onSubmit={handleSubmit}>
         <label>
           <span>Título:</span>
@@ -162,7 +169,7 @@ export const CreatePost = ({ isEdition }) => {
           />
         </label>
         <div>
-          {!response.loading ? (
+          {!insertResponse.loading || !updateResponse.loading ? (
             <button className="btn" type="submit">
               Confirmar
             </button>
@@ -172,9 +179,17 @@ export const CreatePost = ({ isEdition }) => {
             </button>
           )}
         </div>
-        {response.error && <p className="animation error">{response.error}</p>}
+        {(insertResponse.error || updateResponse.error) && (
+          <p className="animation error">
+            {insertResponse.error || updateResponse.error}
+          </p>
+        )}
         {formError && <p className="animation error">{formError}</p>}
-        {authSucess && <p className="animation sucess">{authSucess}</p>}
+        {(authSucessInsert || authSucessUpadte) && (
+          <p className="animation sucess">
+            {authSucessInsert || authSucessUpadte}
+          </p>
+        )}
       </form>
     </div>
   );
