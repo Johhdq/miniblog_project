@@ -29,17 +29,39 @@ export const CreatePost = ({ isEdition }) => {
   const { document: post, loading } = useFetchDocument("posts", id, isEdition);
 
   useEffect(() => {
-    if (isEdition && post) {
-      setBody(post.body);
-      setImage(post.image);
-      setTitle(post.title);
-      setTags(post.tags);
+    const setValues = (body, image, title, tags) => {
+      setBody(body || "");
+      setImage(image || "");
+      setTitle(title || "");
+      setTags(tags || []);
+    };
 
+    if (isEdition && post) {
       let tags = "";
       post.tagsArray.map((tag) => (tags += ` #${tag}`));
-      setTags(tags);
+
+      setValues(post.body, post.image, post.title, tags);
+    } else {
+      setValues();
     }
   }, [post, isEdition]);
+
+  const callFunctionValidateUrl = (image) => {
+    if (!validateUrl(image)) {
+      return false;
+    }
+    return true;
+  };
+
+  const validateUrl = (image) => {
+    try {
+      new URL(image);
+      return true;
+    } catch (error) {
+      console.log("entrou no catch");
+      return false;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,9 +69,7 @@ export const CreatePost = ({ isEdition }) => {
 
     // validar image URL
     if (image !== "") {
-      try {
-        new URL(image);
-      } catch (error) {
+      if (!validateUrl(image)) {
         setFormError("A imagem precisa ser uma URL válida!");
         return;
       }
@@ -64,8 +84,6 @@ export const CreatePost = ({ isEdition }) => {
       setFormError("Por favor, preencha os campos necessários!");
       return;
     }
-
-    console.log("entrou!");
 
     insertDocument({
       title,
@@ -82,11 +100,16 @@ export const CreatePost = ({ isEdition }) => {
 
   return (
     <div className={styles.create_post}>
-      <h2>Criar post</h2>
-      <p>
-        Escreva sobre o que quiser compartilhar e <strong>compartilhe</strong> o
-        seu conhecimento
-      </p>
+      <h2>{isEdition ? "Editando post" : "Criando post"}</h2>
+      {isEdition ? (
+        <p>Altere os dados do post como desejar</p>
+      ) : (
+        <p>
+          Escreva sobre o que quiser compartilhar e <strong>compartilhe</strong>{" "}
+          o seu conhecimento
+        </p>
+      )}
+      <p></p>
       <form onSubmit={handleSubmit}>
         <label>
           <span>Título:</span>
@@ -109,6 +132,12 @@ export const CreatePost = ({ isEdition }) => {
             value={image || ""}
           />
         </label>
+        {image && callFunctionValidateUrl(image) && (
+          <div>
+            <span className={styles.preview_title}>Preview da Imagem:</span>
+            <img className={styles.image_preview} src={image} alt={title} />
+          </div>
+        )}
         <label>
           <span>Conteúdo:</span>
           <textarea
